@@ -1,26 +1,34 @@
-CREATE TABLE buyers (
-    buyer_id SERIAL PRIMARY KEY,
+-- Create Landlords Table
+CREATE TABLE IF NOT EXISTS landlords (
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL
 );
 
-CREATE TABLE landlords (
-    landlord_id SERIAL PRIMARY KEY,
+-- Create Properties Table (Must belong to a landlord)
+CREATE TABLE IF NOT EXISTS properties (
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    phone VARCHAR(15) UNIQUE NOT NULL
+    price DECIMAL(10,2) NOT NULL CHECK (price > 0),
+    location VARCHAR(255) NOT NULL,
+    landlord_id INT NOT NULL REFERENCES landlords(id) ON DELETE CASCADE,
+    buyer_id INT REFERENCES buyers(id) ON DELETE SET NULL,
+    is_sold BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE properties (
-    property_id SERIAL PRIMARY KEY,
-    address VARCHAR(255) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    landlord_id INT REFERENCES landlords(landlord_id) ON DELETE CASCADE
+--  Create Buyers Table
+CREATE TABLE IF NOT EXISTS buyers (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    budget DECIMAL(10,2) NOT NULL CHECK (budget >= 0)
 );
 
-CREATE TABLE transactions (
-    transaction_id SERIAL PRIMARY KEY,
-    buyer_id INT REFERENCES buyers(buyer_id) ON DELETE CASCADE,
-    property_id INT REFERENCES properties(property_id) ON DELETE CASCADE,
+-- Create Transactions Table (Records Purchases)
+CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    buyer_id INT REFERENCES buyers(id) ON DELETE SET NULL,
+    property_id INT REFERENCES properties(id) ON DELETE CASCADE,
     amount DECIMAL(10,2) NOT NULL,
     transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
