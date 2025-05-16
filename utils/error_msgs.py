@@ -1,0 +1,11 @@
+MISSING_ENV_VARIABLE_ERROR = "Missing required environment variable: {}"
+POSTGRES_DB_CONNECTION_ERROR = "Database connection error: {}"
+MONGO_DB_CONNECTION_ERROR="MongoDB connection failed: {}"
+QUERY_EXECUTION_ERROR = "Query execution failed: {}"
+TRANSACTION_ERROR = "Transaction failed: {}"
+PROPERTY_ALREADY_SOLD_ERROR = "Transaction failed: Property is already sold."
+PROPERTY_RETRIEVAL_ERROR = "Error retrieving property information."
+LANDLORD_RETRIEVAL_ERROR = "Error retrieving landlord information."
+BUYER_RETRIEVAL_ERROR = "Error retrieving buyer information."
+INVALID_DATABASE_TYPE_ERROR="Invalid database type specified."
+
